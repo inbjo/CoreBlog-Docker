@@ -6,3 +6,16 @@ root_need() {
         exit 1
     fi
 }
+root_need
+
+download_coreblog(){
+    echo "Start Downloading CoreBlog..."
+    wget http://cdn.ikuter.com/CoreBlog/blog.zip
+    echo "unzip zip file..."
+    unzip -d ./www blog.zip
+    rm -f blog.zip ./www/coreblog/.env
+    cp -f ./www/coreblog/.env.docker ./www/coreblog/.env
+    chmod -R 777 ./www/coreblog/
+    echo "Install Success"
+}
+download_coreblog
