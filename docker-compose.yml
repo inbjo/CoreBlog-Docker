@@ -1,0 +1,61 @@
+version: "3"
+
+services:
+    nginx:
+        image: nginx
+        volumes:
+            - ./sites:/etc/nginx/conf.d
+            - ./www:/www
+        networks:
+            - lnmp
+        depends_on:
+            - php
+        expose:
+            - "80"
+        ports:
+            - "${NGINX_HOST_HTTP_PORT}:80"
+            - "${NGINX_HOST_HTTPS_PORT}:443"
+        user: root
+        privileged: true
+        environment:
+            - TZ=Asia/Shanghai
+    php:
+        image: kudang/php
+        volumes:
+            - ./www:/www
+        networks:
+            - lnmp
+        user: root
+        privileged: true
+        depends_on:
+            - mariadb
+            - redis
+        expose:
+            - "9000"
+        environment:
+            - TZ=Asia/Shanghai
+    mariadb:
+        image: mariadb
+        volumes:
+            - ./data/mariadb:/var/lib/mysql
+        networks:
+            - lnmp
+        expose:
+            - "3306"
+        environment:
+            - TZ=Asia/Shanghai
+            - "MYSQL_DATABASE=coreblog"
+            - "MYSQL_USER=coreblog"
+            - "MYSQL_PASSWORD=coreblog"
+            - "MYSQL_ROOT_PASSWORD=coreblog"
+    redis:
+        image: redis
+        volumes:
+            - ./data/redis:/data
+        networks:
+            - lnmp
+        expose:
+            - "6379"
+
+networks:
+    lnmp:
