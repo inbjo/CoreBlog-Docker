@@ -47,7 +47,6 @@ RUN sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.lis
 # After Build
 WORKDIR /www
 
-COPY sources.list /etc/apt/sources.list
 COPY php.ini /usr/local/etc/php/
 COPY php-fpm-www.conf /usr/local/etc/php-fpm.d/www.conf
 
