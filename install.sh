@@ -16,11 +16,13 @@ download_coreblog(){
     wget http://cdn.ikuter.com/CoreBlog/blog.tar.gz
     tar -zxvf blog.tar.gz -C ./www
     rm -f blog.tar.gz
+    cp ./www/coreblog/.env.example ./www/coreblog/.env
     sed -i -e 's|APP_ENV=production|APP_ENV=docker|' ./www/coreblog/.env
     sed -i -e 's|APP_KEY=|APP_KEY=base64:d0/95VEo40APuttxuy3XSHp+zyNTDMfVY31DRVWBGRs=|' ./www/coreblog/.env
     sed -i -e 's|JWT_SECRET=|JWT_SECRET=BOTwvn5Cu9XIFT4WLXjg19upFtpWcgLxiNRViyrQw6wTuwbId63Gk2ca8fmbuJET|' ./www/coreblog/.env
     sed -i -e 's|CACHE_DRIVER=file|CACHE_DRIVER=redis|' ./www/coreblog/.env
     sed -i -e 's|SESSION_DRIVER=file|SESSION_DRIVER=redis|' ./www/coreblog/.env
+    sed -i -e 's|REDIS_HOST=127.0.0.1|REDIS_HOST=redis|' ./www/coreblog/.env
     chmod -R 777 ./www/coreblog/.env ./www/coreblog/storage ./www/coreblog/bootstrap/cache/
     echo "Install Success"
 }
